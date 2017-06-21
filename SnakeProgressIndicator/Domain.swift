@@ -32,7 +32,7 @@ struct Segment {
 
 struct State {
     let activeSegment : Segment
-    let step : SegmentMove?
+    let move : SegmentMove?
     let board : [Segment]
 }
 
@@ -52,8 +52,9 @@ protocol OppositeValueProtocol {
 extension Segment {
     
     func apply(move:SegmentMove) -> Segment {
-        return Segment(position: position.apply(move: move),
-                       color: .blue)
+        let newPosition = position.apply(move: move)
+        return Segment(position: newPosition,
+                       color: self.color)
     }
 }
 

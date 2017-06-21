@@ -22,8 +22,17 @@ struct IndicatorAlgorithm {
         self.pathIterator = PathGenerator(numberOfItems: numberOfItems)
     }
     
-    func generateFigure() -> [SegmentPosition] {
+    func generateFigure() -> [Segment] {
         
+        let figure = self.generateBoard()
+        let elements : [Segment]  = figure.map {
+            return Segment(position: $0,
+                           color: self.color(for: $0))
+        }
+        return elements
+    }
+    
+    func generateBoard() -> [SegmentPosition] {
         var figure : [SegmentPosition] = []
         var countdown = 0
         let yCoord = 1
@@ -44,7 +53,7 @@ struct IndicatorAlgorithm {
         return self.pathIterator.next()
     }
     
-    mutating func color(for position:SegmentPosition) -> UIColor {
+    func color(for position:SegmentPosition) -> UIColor {
         return .blue
     }
 }

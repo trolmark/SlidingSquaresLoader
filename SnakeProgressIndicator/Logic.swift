@@ -22,20 +22,17 @@ class IndicatorLogic {
     func initialState() -> State {
         
         let figure = self.algorithm.generateFigure()
-        let elements : [Segment]  = figure.map {
-            return Segment(position: $0,
-                           color: self.algorithm.color(for: $0))
-        }
-        let first = elements.first!
+        let start = figure.first!
+        let startMove = self.algorithm.nextMove()
         
-        return State(activeSegment: first,
-                     step: self.algorithm.nextMove(),
-                     board: elements)
+        return State(activeSegment: start,
+                     move: startMove,
+                     board: figure)
     }
         
     func nextMove(with state:State) -> (MoveResult?,State) {
                 
-        guard let move = state.step
+        guard let move = state.move
         else { return (nil, state) }
         
         let (shiftedSegments, nextActive) = segmentsToShift(from: state.board,
@@ -49,7 +46,7 @@ class IndicatorLogic {
         
         let moveResult = MoveResult(elementsToMove: shiftedSegments, move: move)
         let newState = State(activeSegment: nextActive,
-                             step: self.algorithm.nextMove(),
+                             move: self.algorithm.nextMove(),
                              board: newBoard)
     
         return (moveResult, newState)

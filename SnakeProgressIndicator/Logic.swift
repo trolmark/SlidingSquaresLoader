@@ -1,0 +1,92 @@
+//
+//  LogicImplementation.swift
+//  SnakeProgressIndicator
+//
+//  Created by Andrew on 6/4/17.
+//  Copyright © 2017 app.snake.indicator. All rights reserved.
+//
+
+import Foundation
+import UIKit
+
+
+
+class IndicatorLogic {
+    
+    var algorithm : IndicatorAlgorithm
+    
+    init(with algorithm : IndicatorAlgorithm) {
+        self.algorithm = algorithm
+    }
+
+    func initialState() -> State {
+        
+        let figure = self.algorithm.generateFigure()
+        let elements : [Segment]  = figure.map {
+            return Segment(position: $0,
+                           color: self.algorithm.color(for: $0))
+        }
+        let first = elements.first!
+        
+        return State(activeSegment: first,
+                     step: self.algorithm.nextMove(),
+                     board: elements)
+    }
+        
+    func nextMove(with state:State) -> (MoveResult?,State) {
+                
+        guard let move = state.step
+        else { return (nil, state) }
+        
+        let (shiftedSegments, nextActive) = segmentsToShift(from: state.board,
+                                                            with: state.activeSegment,
+                                                            move: move,
+                                                            accumulator: [state.activeSegment])
+
+        let newBoard = self.shift(segmentsToShift: shiftedSegments,
+                                  with: move,
+                                  on: state.board)
+        
+        let moveResult = MoveResult(elementsToMove: shiftedSegments, move: move)
+        let newState = State(activeSegment: nextActive,
+                             step: self.algorithm.nextMove(),
+                             board: newBoard)
+    
+        return (moveResult, newState)
+    }
+}
+
+private extension IndicatorLogic {
+    
+    func shift(segmentsToShift:[Segment],
+               with move:SegmentMove,
+               on board:[Segment]) -> [Segment] {
+        
+        return board.map { segmentInBoard -> Segment in
+            if segmentsToShift.contains(where: { $0 == segmentInBoard }) {
+                return segmentInBoard.apply(move: move)
+            }
+            return segmentInBoard
+        }
+    }
+    
+
+    func segmentsToShift(from segments:[Segment],
+                         with start : Segment,
+                         move:SegmentMove,
+                         accumulator:[Segment]) -> ([Segment], Segment) {
+    
+        let nextCoordinate = start.position.apply(move: move)
+        guard let neighbor = segments.first(where: { $0.position == nextCoordinate })
+        else {
+            return (accumulator, Segment(position: nextCoordinate,
+                                         color: start.color))
+        }
+
+        return self.segmentsToShift(from:segments,
+                                    with:neighbor,
+                                    move:move,
+                                    accumulator:accumulator + [neighbor])
+    }
+}
+

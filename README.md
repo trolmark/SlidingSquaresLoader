@@ -1,4 +1,10 @@
 # SlidingSquaresLoader
-UI control 
 
-[Image](https://assets.materialup.com/uploads/7016c7a3-50ab-4dc9-84ba-69581599a92a/preview.gif)
+![demo](demo.gif)
+
+***
+
+This is reconstruction of the custom UI control made for fun and not for production.  
+
+It basically consists of a core logic part (with domain and immutable state), and UI, which 
+is kind of "interpreter"

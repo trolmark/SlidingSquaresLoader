@@ -9,17 +9,19 @@
 import Foundation
 import UIKit
 
-
+typealias  HSVColor = (Float, Float, Float)
 
 
 struct IndicatorAlgorithm {
 
     fileprivate var pathIterator : PathGenerator
+    fileprivate let colorGenerator : ColorGenerator
     let numberOfItems:Int
     
     init(numberOfItems : Int) {
         self.numberOfItems = numberOfItems
         self.pathIterator = PathGenerator(numberOfItems: numberOfItems)
+        self.colorGenerator = ColorGenerator()
     }
     
     func generateFigure() -> [Segment] {
@@ -27,7 +29,7 @@ struct IndicatorAlgorithm {
         let figure = self.generateBoard()
         let elements : [Segment]  = figure.map {
             return Segment(position: $0,
-                           color: self.color(for: $0))
+                           color: self.positionToColor($0))
         }
         return elements
     }
@@ -53,8 +55,17 @@ struct IndicatorAlgorithm {
         return self.pathIterator.next()
     }
     
-    func color(for position:SegmentPosition) -> UIColor {
-        return .blue
+    func positionToColor(_ position:SegmentPosition) -> UIColor {
+        let hsvColor = positionToHsv(position)
+        return colorGenerator.hsvToRgb(h: hsvColor.0, s: hsvColor.1, v: hsvColor.2)
+    }
+
+    
+    func positionToHsv(_ position : SegmentPosition) -> HSVColor {
+        let normalizeX = Float(position.x/CGFloat(numberOfItems))
+        let normalizeY = Float(position.y/CGFloat(numberOfItems))
+        
+        return HSVColor(normalizeX, normalizeY, 1.0)
     }
 }
 
@@ -107,6 +118,37 @@ struct PathGenerator : IteratorProtocol {
     
     private func needGoBackward() -> Bool {
         return stepIndex == (2*numberOfItems - 1)
+    }
+}
+
+
+
+struct ColorGenerator {
+    
+    func hsvToRgb(h:Float, s:Float, v : Float) -> UIColor {
+        
+        var i = floor(h*6)
+        let f = h*6 - i
+        let p = v * (1 - s)
+        let q = v * (1 - f * s)
+        let t = v * (1 - (1 - f) * s)
+        
+        var rgb : (Float, Float, Float)
+        i.formTruncatingRemainder(dividingBy: 6)
+        
+        switch Int(i) {
+        case 0: rgb = (v, t, p)
+        case 1 : rgb = (q, v, p)
+        case 2: rgb = (p, v, t)
+        case 3 :rgb = (p, q, v)
+        case 4 : rgb = (t, p, v)
+        case 5 : rgb = (v, p, q)
+        default : rgb = (v, t, p)
+        }
+        
+        return UIColor(colorLiteralRed: rgb.0 ,
+                       green: rgb.1,
+                       blue: rgb.2, alpha: 1.0)
     }
 }
 

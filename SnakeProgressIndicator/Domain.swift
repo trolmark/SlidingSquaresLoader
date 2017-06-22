@@ -51,10 +51,11 @@ protocol OppositeValueProtocol {
 
 extension Segment {
     
-    func apply(move:SegmentMove) -> Segment {
+    func apply(move:SegmentMove, position2Color:(SegmentPosition) -> UIColor) -> Segment {
         let newPosition = position.apply(move: move)
+        let color = position2Color(newPosition)
         return Segment(position: newPosition,
-                       color: self.color)
+                       color: color)
     }
 }
 

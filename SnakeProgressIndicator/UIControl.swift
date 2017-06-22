@@ -29,7 +29,9 @@ extension IndicatorUIConfiguration {
 class IndicatorControl : NSObject {
     
     let logic : IndicatorLogic
+    let animator : NodeAnimator
     var board : UIBoard
+    
     
     
     init(logic:IndicatorLogic,
@@ -37,6 +39,8 @@ class IndicatorControl : NSObject {
         
         self.logic = logic
         self.board = UIBoard(config: configuration)
+        self.animator = NodeAnimator(moveStep: configuration.moveStep(),
+                                     duration: configuration.animationDuration)
         super.init()
     }
     
@@ -74,7 +78,7 @@ private extension IndicatorControl {
             self.board.findNode(by: $0.position, in: nodes)
         }
         
-        let actions = self.board.actions(from: moveResult)
+        let actions = self.animator.actions(from: moveResult)
         let dispatchGroup = DispatchGroup()
         
         zip(nodesToMove, actions).forEach { node, action in

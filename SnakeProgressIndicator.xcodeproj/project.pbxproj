@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		582FBBFE1EFBBE79009934B9 /* NodeAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582FBBFD1EFBBE79009934B9 /* NodeAnimator.swift */; };
 		5856EE881EF12B8700A7AFE2 /* UIBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5856EE871EF12B8700A7AFE2 /* UIBoard.swift */; };
 		5856EE8A1EF165E400A7AFE2 /* Algorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5856EE891EF165E400A7AFE2 /* Algorithm.swift */; };
 		841878011EE4318C00A893F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841878001EE4318C00A893F0 /* AppDelegate.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		582FBBFD1EFBBE79009934B9 /* NodeAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeAnimator.swift; sourceTree = "<group>"; };
 		5856EE871EF12B8700A7AFE2 /* UIBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBoard.swift; sourceTree = "<group>"; };
 		5856EE891EF165E400A7AFE2 /* Algorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Algorithm.swift; sourceTree = "<group>"; };
 		841877FD1EE4318C00A893F0 /* SnakeProgressIndicator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SnakeProgressIndicator.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -70,6 +72,7 @@
 				841878141EE431C200A893F0 /* Logic.swift */,
 				5856EE891EF165E400A7AFE2 /* Algorithm.swift */,
 				841878161EE4321200A893F0 /* UIControl.swift */,
+				582FBBFD1EFBBE79009934B9 /* NodeAnimator.swift */,
 				5856EE871EF12B8700A7AFE2 /* UIBoard.swift */,
 				841878041EE4318C00A893F0 /* Main.storyboard */,
 				841878071EE4318C00A893F0 /* Assets.xcassets */,
@@ -155,6 +158,7 @@
 				841878151EE431C200A893F0 /* Logic.swift in Sources */,
 				841878031EE4318C00A893F0 /* ViewController.swift in Sources */,
 				5856EE881EF12B8700A7AFE2 /* UIBoard.swift in Sources */,
+				582FBBFE1EFBBE79009934B9 /* NodeAnimator.swift in Sources */,
 				841878011EE4318C00A893F0 /* AppDelegate.swift in Sources */,
 				841878171EE4321200A893F0 /* UIControl.swift in Sources */,
 				841878131EE431AC00A893F0 /* Domain.swift in Sources */,

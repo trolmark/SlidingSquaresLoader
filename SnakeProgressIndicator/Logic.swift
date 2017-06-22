@@ -61,7 +61,8 @@ private extension IndicatorLogic {
         
         return board.map { segmentInBoard -> Segment in
             if segmentsToShift.contains(where: { $0 == segmentInBoard }) {
-                return segmentInBoard.apply(move: move)
+                return segmentInBoard.apply(move: move,
+                                            position2Color: self.algorithm.positionToColor)
             }
             return segmentInBoard
         }

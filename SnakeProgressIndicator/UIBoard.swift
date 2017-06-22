@@ -20,8 +20,6 @@ struct UIBoard {
     }
 }
 
-
-// Nodes
 extension UIBoard {
     
     mutating func setupNodes(for board:[Segment]) {
@@ -50,47 +48,7 @@ extension UIBoard {
     }
 }
 
-// Actions
 extension UIBoard {
-    
-    func action(for move:SegmentMove) -> SKAction {
-        switch move {
-        case .down:
-            return SKAction.moveBy(x: 0, y: -config.moveStep(),
-                                   duration: config.animationDuration)
-        case .left:
-            return SKAction.moveBy(x: -config.moveStep(), y: 0,
-                                   duration: config.animationDuration)
-        case .right:
-            return SKAction.moveBy(x: config.moveStep(), y: 0,
-                                   duration: config.animationDuration)
-        case .up:
-            return SKAction.moveBy(x: 0, y: config.moveStep(),
-                                   duration: config.animationDuration)
-        }
-    }
-    
-    func action(for color:UIColor) -> SKAction {
-        return SKAction.customAction(withDuration: config.animationDuration) { node, elapsedTime in
-            let shapeNode = node as! SKShapeNode
-            shapeNode.fillColor = color
-        }
-    }
-}
-
-// Helpers
-extension UIBoard {
-    
-    func actions(from result:MoveResult) -> [SKAction] {
-        
-        let move = result.move
-        let moveAction = self.action(for: move)
-        
-        return result.elementsToMove.map { element in
-            let colorAction = self.action(for: element.color)
-            return SKAction.group([moveAction,colorAction])
-        }
-    }
     
     func findNode(by segmentPosition : SegmentPosition,
                   in nodes:[SKShapeNode]) -> SKShapeNode? {

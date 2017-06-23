@@ -6,7 +6,7 @@
 
 This is reconstruction of the custom UI control made for exercise (it's a proof-of-concept, not at all production-ready)
 
-Notes:
+### Notes
 Project basically consists of a logic part (functional core), and UI, which 
 is kind of "interpreter" (imperative shell).
 
